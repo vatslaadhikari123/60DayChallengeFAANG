@@ -1,0 +1,22 @@
+class Solution {
+    public int minSubArrayLen(int target, int[] nums) {
+        int curr=0;
+        int left=0, min=Integer.MAX_VALUE;
+        for(int right=0; right<nums.length; right++){
+            curr+=nums[right];
+            while(curr>=target){
+                min=Math.min(min, right-left+1);
+                curr=curr-nums[left];
+                left=left+1;
+            }
+        }
+        if(min==Integer.MAX_VALUE){
+            return 0;
+        }
+        return min;
+    }
+}
+
+Time Complexity - O(N) <= 2N
+
+Space Complexity - O(1)
