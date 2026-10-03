@@ -50,3 +50,45 @@ class Solution {
         return max;
     }
 }
+
+
+Test cases -
+
+Empty string: "" -> 0 (or "Invalid Input")
+Single character: "a" -> 1
+All duplicates: "bbbbb" -> 1
+All unique: "abcdef" -> 6
+Reverse-jump trap: "abba" -> 2 ("ab" or "ba")
+Disjoint / embedded repeats: "tmmzuxt" -> 5 ("mzuxt")
+Alternating / periodic: "abcabcbb" -> 3 ("abc")
+Subsequence trap: "pwwkew" -> 3 ("wke", not "pwke")
+Whitespaces: " " -> 1, "   " -> 1, "a b c" -> 3
+Case sensitive: "Aa" -> 2 ('A' != 'a')
+
+Time Complexity - O(N)
+
+map.put() - O(1)
+map.containsKey() - O(1)
+
+
+(Accepetd 2026) - 
+
+import java.util.*;
+public class Main
+{
+	public static void main(String[] args) {
+		Map<Character, Integer> mp = new HashMap<>();
+		int start=0, max=0;
+		Scanner sc = new Scanner(System.in);
+		String s = sc.nextLine();
+		for(int i=0; i< s.length(); i++){
+		    char ch = s.charAt(i);
+		    if(mp.containsKey(ch)){
+		        start=Math.max(start, mp.get(ch)+1);
+		    }
+	        mp.put(ch,i);
+	        max=Math.max(max, i-start+1);
+		}
+		System.out.println("Answer: "+ max);
+	}
+}
