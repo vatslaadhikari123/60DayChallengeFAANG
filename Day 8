@@ -1,0 +1,27 @@
+Q16. Climbing Stairs
+
+Best Solution (Accepted, can do memoization and space optimisation further) -
+
+class Solution {
+    public int climbStairs(int n) {
+        int dp[]=new int[n+1];
+        Arrays.fill(dp,0);
+        return recursion(n, dp);
+    }
+    public int  recursion(int ind, int dp[]){
+        if(ind==0){
+            return 1;
+        }
+        if(ind==1){
+            return 1;
+        }
+        if(dp[ind]!=0){
+            return dp[ind];
+        }
+
+        int left=recursion(ind-1, dp);
+        int right=recursion(ind-2, dp);
+        dp[ind]=left+right;
+        return dp[ind];
+    }
+}

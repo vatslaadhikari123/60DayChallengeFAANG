@@ -1,0 +1,61 @@
+Q5. Valid Palindrome
+
+(Accepted) but its beats are too low, can be optimised acc to leetcode -
+
+class Solution {
+    public boolean isPalindrome(String s) {
+        s = s.replaceAll("[^a-zA-Z0-9]", "").toLowerCase();
+
+        String copy = "";
+        for (int i = s.length() - 1; i >= 0; i--) {
+            copy = copy + s.charAt(i);
+        }
+
+        return s.equals(copy);
+    }
+}
+
+
+The line `s = s.replaceAll("[^a-zA-Z0-9]", "").toLowerCase();` performs two operations on the input string `s`:
+
+1. `s.replaceAll("[^a-zA-Z0-9]", "")`: This part uses the `replaceAll` method with a regular expression `[^a-zA-Z0-9]` 
+to replace all characters that are not letters (both uppercase and lowercase) or digits (0-9) with an empty string. 
+In other words, it removes all non-alphanumeric characters from the string. The regular expression `[^a-zA-Z0-9]` 
+represents a character class that matches any character that is not in the range of letters (both uppercase and lowercase) or digits.
+
+2. `.toLowerCase()`: After removing non-alphanumeric characters, this part converts the entire string to lowercase. 
+This is done to make the string case-insensitive when checking if it's a palindrome. By converting all characters to lowercase, 
+the code ensures that letters are compared without regard to their case. For example, "A" and "a" would be considered the same character.
+
+So, in summary, the line of code `s = s.replaceAll("[^a-zA-Z0-9]", "").toLowerCase();` prepares the input string `s` for palindrome 
+checking by removing non-alphanumeric characters and converting it to lowercase for a case-insensitive comparison.
+
+
+Best Solution (Accepted) -
+(Functions always come in handy like isLetterorDigit)
+
+class Solution {
+    public boolean isPalindrome(String s) {
+       
+        int left = 0;
+        int right = s.length() - 1;
+
+        while (left < right) {
+            while (left < right && !Character.isLetterOrDigit(s.charAt(left))) {
+                left++;
+            }
+
+            while (left < right && !Character.isLetterOrDigit(s.charAt(right))) {
+                right--;
+            }
+
+            if (Character.toLowerCase(s.charAt(left)) != Character.toLowerCase(s.charAt(right))) {
+                return false; 
+            }
+
+            left++;
+            right--;
+        }
+        return true;
+    }
+}

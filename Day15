@@ -1,0 +1,80 @@
+Q29. Coin Change
+
+(not Accepted, TLE) -
+
+class Solution {
+    public int coinChange(int[] coins, int amount) {
+        int ans= recursion(coins.length-1, amount, coins);
+        if(ans>=1e9){
+            return -1;
+        }
+        else{
+            return ans;
+        }
+    }
+
+    int recursion(int ind, int k,  int coins[]){
+
+        if(ind==0){
+            if(k%coins[ind]==0){
+                return k/coins[ind];
+            }
+            else{
+                return (int)1e9;
+            }
+        }
+
+        int nottake=0+recursion(ind-1,k,coins);
+        int take=Integer.MAX_VALUE;
+        if(coins[ind]<=k){
+            take=1+recursion(ind, k-coins[ind], coins);
+        }
+       
+
+        return Math.min(take,nottake);
+    }
+}
+
+Better Solution (Accepted, but beats are low) -
+
+class Solution {
+    public int coinChange(int[] coins, int amount) {
+        int dp[][]=new int[coins.length][amount+1];
+        for (int[] row : dp) {
+            Arrays.fill(row, -1);
+        }
+        int ans= recursion(coins.length-1, amount, coins, dp);
+        if(ans>=1e9){
+            return -1;
+        }
+        else{
+            return ans;
+        }
+    }
+
+    int recursion(int ind, int k,  int coins[], int dp[][]){
+
+
+        if(ind==0){
+            if(k%coins[ind]==0){
+                return k/coins[ind];
+            }
+            else{
+                return (int)1e9;
+            }
+        }
+
+        if(dp[ind][k]!=-1){
+            return dp[ind][k];
+        }
+
+        int nottake=0+recursion(ind-1,k,coins,dp);
+        int take=Integer.MAX_VALUE;
+        if(coins[ind]<=k){
+            take=1+recursion(ind, k-coins[ind], coins,dp);
+        }
+       
+
+        return (dp[ind][k]=Math.min(take,nottake));
+    }
+}

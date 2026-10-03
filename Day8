@@ -1,0 +1,60 @@
+Q15. Longest Palindrome
+
+Not good solution (Accepted, very less beats) -
+
+class Solution {
+    public int longestPalindrome(String s) {
+        HashMap<Character, Integer> hm = new HashMap<>();
+        for(int i=0; i<s.length(); i++){
+            char ch=s.charAt(i);
+            if(hm.containsKey(ch)){
+                hm.put(ch, hm.get(ch)+1);
+            }
+            else{
+                hm.put(ch,1);
+            }
+        }
+
+        int ans=0;
+        boolean odd=false;
+         for (char key : hm.keySet()) {
+            int frequency = hm.get(key);
+            if (frequency % 2 == 0) {
+                ans += frequency;
+            } else {
+                ans+=frequency-1;
+                odd=true;
+            }
+        }
+        if(odd){
+            ans++;
+        }
+        return ans;
+    }
+}
+
+
+Better Solution (Accepted, but still the beats can be improved) -
+
+class Solution {
+    public int longestPalindrome(String s) {
+       int ans=0;
+       HashSet<Character> hs = new HashSet<Character>();
+       for(int i=0; i<s.length(); i++){
+           char ch=s.charAt(i);
+           if(hs.contains(ch)){
+               ans+=2;
+               hs.remove(ch);
+           }
+           else{
+               hs.add(ch);
+           }
+       }
+
+       if(hs.size()>0){
+           ans++;
+       }
+
+       return ans;
+    }
+}

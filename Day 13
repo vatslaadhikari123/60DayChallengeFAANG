@@ -1,0 +1,40 @@
+Q26. Evaluate Reverse Polish Notation
+
+Good Solution (Accepted) -
+
+class Solution {
+    public int evalRPN(String[] tokens) {
+        Stack<Integer> st = new Stack<>();
+        for(int i=0; i<tokens.length;i++){
+            if(isOperator(tokens[i])){
+                int a=st.pop();
+                int b=st.pop();
+                int ans=calc(b,a,tokens[i]);
+                st.push(ans);
+            }
+            else{
+                st.push(Integer.parseInt(tokens[i]));
+            }
+        }
+        return st.pop();
+    }
+
+    private boolean isOperator(String token) {
+        return token.equals("+") || token.equals("-") || token.equals("*") || token.equals("/");
+    }
+
+    private int calc(int operand1, int operand2, String operator) {
+        switch (operator) {
+            case "+":
+                return operand1 + operand2;
+            case "-":
+                return operand1 - operand2;
+            case "*":
+                return operand1 * operand2;
+            case "/":
+                return operand1 / operand2;
+            default:
+                return 0; // This should not happen if the input is valid.
+        }
+    }
+}

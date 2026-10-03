@@ -1,0 +1,52 @@
+Q22. Longest substring without repeating characters
+
+TLE (not accepted) -
+
+class Solution {
+    public int lengthOfLongestSubstring(String s) {
+        HashMap<Character, Integer> hm = new HashMap<>();
+        int max=0, cur=0;
+        for(int i=0; i<s.length(); i++){
+            char ch=s.charAt(i);
+            if(hm.containsKey(ch)){
+                i=hm.get(ch)-1;
+                hm.clear();
+                if(max<cur){
+                    max=cur;
+                }
+                cur=0;
+            }
+            else{
+                hm.put(ch,i);
+                cur++;
+            }
+        }
+        return max;
+    }
+}
+
+(Accepeted) -
+
+class Solution {
+    public int lengthOfLongestSubstring(String s) {
+        HashMap<Character, Integer> map = new HashMap<>();
+        int max = 0, start = 0;
+
+        for (int end = 0; end < s.length(); end++) {
+            char ch = s.charAt(end);
+
+            if (map.containsKey(ch)) {
+                // If the character is already in the map, update the starting index
+                start = Math.max(start, map.get(ch) + 1);
+            }
+
+            // Update the character's position in the map
+            map.put(ch, end);
+
+            // Calculate the current maximum substring length
+            max = Math.max(max, end - start + 1);
+        }
+
+        return max;
+    }
+}

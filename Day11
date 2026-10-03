@@ -1,0 +1,75 @@
+Q21. K Closest Points To Origin
+
+//I didnt know hot to use comparator
+
+//Explanation of comparator working given below
+
+import java.util.Arrays;
+import java.util.Comparator;
+
+class Solution {
+    public int[][] kClosest(int[][] points, int k) {
+        // Sort the points based on their distances from the origin (0,0)
+        Arrays.sort(points, new Comparator<int[]>() {
+            public int compare(int[] p1, int[] p2) {
+                int dist1 = p1[0] * p1[0] + p1[1] * p1[1];
+                int dist2 = p2[0] * p2[0] + p2[1] * p2[1];
+                return Integer.compare(dist1, dist2);
+            }
+        });
+        
+        // Create a result array containing the first k points
+        int[][] result = new int[k][2];
+        for (int i = 0; i < k; i++) {
+            result[i] = points[i];
+        }
+        
+        return result;
+    }
+}
+
+
+Certainly! Let's go through all the comparisons in the example step by step:
+
+```java
+int[][] points = {
+    {1, 3},
+    {-2, 2},
+    {5, -1},
+    {0, 0},
+    {3, 4}
+};
+```
+
+1. **Comparison 1 (p1 = {1, 3}, p2 = {-2, 2}):**
+   - `dist1` (distance of `{1, 3}` from origin) = `(1 - 0)^2 + (3 - 0)^2 = 1 + 9 = 10`
+   - `dist2` (distance of `{-2, 2}` from origin) = `(-2 - 0)^2 + (2 - 0)^2 = 4 + 4 = 8`
+   - `compare` returns a positive value because `dist1` (10) is greater than `dist2` (8).
+
+2. **Comparison 2 (p1 = {-2, 2}, p2 = {5, -1}):**
+   - `dist1` (distance of `{-2, 2}` from origin) = `8` (already calculated)
+   - `dist2` (distance of `{5, -1}` from origin) = `(5 - 0)^2 + (-1 - 0)^2 = 25 + 1 = 26`
+   - `compare` returns a negative value because `dist1` (8) is less than `dist2` (26).
+
+3. **Comparison 3 (p1 = {-2, 2}, p2 = {0, 0}):**
+   - `dist1` (distance of `{-2, 2}` from origin) = `8` (already calculated)
+   - `dist2` (distance of `{0, 0}` from origin) = `0`
+   - `compare` returns a positive value because `dist1` (8) is greater than `dist2` (0).
+
+4. **Comparison 4 (p1 = {0, 0}, p2 = {3, 4}):**
+   - `dist1` (distance of `{0, 0}` from origin) = `0`
+   - `dist2` (distance of `{3, 4}` from origin) = `(3 - 0)^2 + (4 - 0)^2 = 9 + 16 = 25`
+   - `compare` returns a negative value because `dist1` (0) is less than `dist2` (25).
+
+5. **Sorting Process Continues:**
+   - We continue comparing the remaining points, but I won't list all the comparisons here for brevity. The sorting process ensures that the points are arranged based on their distances from the origin in ascending order.
+
+6. **Final Sorted Array:**
+
+   After all comparisons are done, the `points` array is sorted as follows:
+
+   ```
+   {{0, 0}, {-2, 2}, {1, 3}, {3, 4}, {5, -1}}
+   ```
+
+So, these are the comparisons made during the sorting process, resulting in the `points` array being sorted from closest to farthest points from the origin.
