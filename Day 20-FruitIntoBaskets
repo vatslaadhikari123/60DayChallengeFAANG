@@ -1,0 +1,39 @@
+class Solution {
+    public int totalFruit(int[] fruits) {
+        Map<Integer, Integer> mp = new HashMap<>();
+        int max=Integer.MIN_VALUE, left=0;
+        for(int i=0; i<fruits.length; i++){
+            if(mp.containsKey(fruits[i])){
+                mp.put(fruits[i], mp.get(fruits[i])+1);
+            }else{
+                mp.put(fruits[i],1);
+            }
+            while(mp.size()>2){
+                mp.put(fruits[left],mp.get(fruits[left])-1);
+                if(mp.get(fruits[left])==0){
+                    mp.remove(fruits[left]);
+                }
+                left++;
+            }
+            max=Math.max(max,i-left+1);
+        }
+        return max;
+    }
+}
+
+Time Complexity - O(N)
+Space Complexity: O(1) — The map never stores more than $3$ keys before the while loop kicks in to remove the excess key.
+
+Instead of counting how many times the while loop runs on one specific turn, count how many times each line can execute over the entire lifetime of the program:
+
+Outer for loop:
+Variable i goes from 0 to n - 1.
+Executes exactly n times.
+
+Inner while loop:
+Every time the while loop runs, left increments by 1 (left++).
+
+Since left starts at 0 and can never exceed n, the statement left++ can execute at most n times in total across all iterations combined.
+Total Operations = Total outer steps + Total inner steps = n + n = 2n
+
+Since constants are dropped in asymptotic analysis:O(2n) = O(n)
